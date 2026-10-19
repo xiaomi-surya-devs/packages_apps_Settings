@@ -22,6 +22,7 @@ import com.android.settings.R
 import com.android.settingslib.metadata.PreferenceAvailabilityProvider
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
+import com.android.settingslib.metadata.preferencesapi.preconditions.PreconditionStability
 import com.android.settingslib.preference.PreferenceBinding
 
 class LineageMaintainerPreference :
@@ -29,6 +30,14 @@ class LineageMaintainerPreference :
     PreferenceAvailabilityProvider,
     PreferenceSummaryProvider,
     PreferenceBinding {
+
+    override val purpose: Int
+        get() = R.string.lineage_maintainer
+
+    override val availabilityDescription: String
+        get() = "Maintainer information is available if set."
+
+    override fun getAvailabilityStability() = PreconditionStability.STABLE_UNTIL_APK_UPDATE
 
     companion object {
         private const val ROM_PROPERTY = "ro.lineage.maintainer"
