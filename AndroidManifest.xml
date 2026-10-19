@@ -16,6 +16,11 @@
         android:name="com.android.settings.USE_BIOMETRIC_PROVIDER"
         android:protectionLevel="signature|privileged"/>
 
+    <!-- Permission for using posture guidance -->
+    <permission
+        android:name="com.google.android.settings.biometrics.face.POSTURE_GUIDANCE"
+        android:protectionLevel="privileged|signature"/>
+
     <uses-permission android:name="android.permission.REQUEST_NETWORK_SCORES" />
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
@@ -361,6 +366,17 @@
                        android:value="com.android.settings.ResetNetwork"/>
             <meta-data android:name="com.android.settings.HIGHLIGHT_MENU_KEY"
                        android:value="@string/menu_key_system"/>
+        </activity>
+
+        <!-- Face enroll -->
+        <activity android:theme="@style/SudThemeGlif.Light"
+                  android:name="com.google.android.settings.biometrics.face.FaceEnrollActivityDirector"
+                  android:exported="true"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -3153,7 +3169,7 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".biometrics.face.FaceEnrollFinish"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/GlifV4Theme.DayNight"
             android:screenOrientation="portrait"/>
 
@@ -6309,6 +6325,17 @@
                 <action android:name="android.app.appfunctions.AppFunctionService"/>
             </intent-filter>
         </service>
+
+        <activity android:theme="@style/SudThemeGlif.Light"
+                  android:name="com.google.android.settings.biometrics.face.FaceEnrollConfirmation"
+                  android:permission="com.google.android.settings.biometrics.face.POSTURE_GUIDANCE"
+                  android:exported="true"
+                  android:screenOrientation="nosensor">
+            <intent-filter>
+                <action android:name="com.google.android.settings.action.CONFIRM_FACE_ENROLLMENT"/>
+               <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <!-- This is the longest AndroidManifest.xml ever. -->
 
