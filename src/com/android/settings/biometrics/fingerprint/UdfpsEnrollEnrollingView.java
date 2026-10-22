@@ -21,7 +21,6 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Insets;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -54,7 +53,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.settings.R;
-import com.android.settings.biometrics.BiometricUtils;
 import com.android.settings.flags.Flags;
 import com.android.systemui.biometrics.UdfpsUtils;
 import com.android.systemui.biometrics.shared.model.UdfpsOverlayParams;
@@ -85,7 +83,6 @@ public class UdfpsEnrollEnrollingView extends GlifLayout {
     private AccessibilityManager mAccessibilityManager;
 
     private ObjectAnimator mHeaderScrollAnimator;
-    private boolean mIsUdfpsLocationLow;
 
     public UdfpsEnrollEnrollingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -274,7 +271,6 @@ public class UdfpsEnrollEnrollingView extends GlifLayout {
             UdfpsEnrollHelper udfpsEnrollHelper,
             AccessibilityManager accessibilityManager) {
         mAccessibilityManager = accessibilityManager;
-        mIsUdfpsLocationLow = BiometricUtils.isUdfpsLocationLow(mContext, udfpsProps);
         initUdfpsEnrollView(udfpsProps, udfpsEnrollHelper);
 
         if (!mIsLandscape) {
@@ -284,18 +280,6 @@ public class UdfpsEnrollEnrollingView extends GlifLayout {
         }
         mUdfpsEnrollView.setVisibility(View.INVISIBLE);
         setOnHoverListener();
-    }
-
-    @Override
-    public int getFooterBackgroundColor() {
-        return mIsUdfpsLocationLow && !mIsLandscape
-                ? Color.TRANSPARENT : super.getFooterBackgroundColor();
-    }
-
-    @Override
-    public int getFooterBarMoreToScrollBackgroundColor() {
-        return mIsUdfpsLocationLow && !mIsLandscape
-                ? Color.TRANSPARENT : super.getFooterBarMoreToScrollBackgroundColor();
     }
 
     void setSecondaryButtonBackground(@ColorInt int color) {

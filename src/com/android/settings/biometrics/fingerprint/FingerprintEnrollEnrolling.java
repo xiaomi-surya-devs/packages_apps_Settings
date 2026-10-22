@@ -306,22 +306,16 @@ public class FingerprintEnrollEnrolling extends BiometricsEnrollEnrolling {
         );
 
         if (mCanAssumeUdfps) {
-            final LinearLayout buttonContainer = mFooterBarMixin.getButtonContainer();
-            if (buttonContainer != null) {
+            if (startAlign) {
+                // Start-align the secondary button instead of stretching it over the sensor.
+                final LinearLayout buttonContainer = mFooterBarMixin.getButtonContainer();
                 buttonContainer.post(() -> {
-                    if (startAlign) {
-                        // Keep the button clear of low-positioned sensors.
-                        buttonContainer.setBackgroundColor(Color.TRANSPARENT);
-                        buttonContainer.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-                        final Button secondaryButtonView =
-                                mFooterBarMixin.getSecondaryButtonView();
-                        if (secondaryButtonView != null) {
-                            final LayoutParams lp = secondaryButtonView.getLayoutParams();
-                            lp.width = LayoutParams.WRAP_CONTENT;
-                            secondaryButtonView.setLayoutParams(lp);
-                            secondaryButtonView.setMinHeight(0);
-                        }
-                    }
+                    buttonContainer.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+                    final Button secondaryButtonView = mFooterBarMixin.getSecondaryButtonView();
+                    final LayoutParams lp = secondaryButtonView.getLayoutParams();
+                    lp.width = LayoutParams.WRAP_CONTENT;
+                    secondaryButtonView.setLayoutParams(lp);
+                    secondaryButtonView.setMinHeight(0);
                 });
             }
             // Keep the footer bar transparent so it doesn't overlap the UDFPS sensor.
